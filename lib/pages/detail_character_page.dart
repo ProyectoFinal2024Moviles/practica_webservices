@@ -5,7 +5,7 @@ import 'package:practica_webservices/models/response_api.dart';
 import '../boxes.dart';
 
 class DetailCharacterPage extends StatefulWidget {
-  final dynamic character; // Acepta tanto Results como LocalCharacter
+  final dynamic character;
 
   DetailCharacterPage(this.character);
 
@@ -15,7 +15,7 @@ class DetailCharacterPage extends StatefulWidget {
 }
 
 class _DetailCharacterPageState extends State<DetailCharacterPage> {
-  final dynamic character; // Acepta tanto Results como LocalCharacter
+  final dynamic character;
 
   _DetailCharacterPageState(this.character);
 

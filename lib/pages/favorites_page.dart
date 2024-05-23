@@ -28,8 +28,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailCharacterPage(
-                        character), // Asegúrate de que DetailCharacterPage acepte LocalCharacter
+                    builder: (context) => DetailCharacterPage(character),
                   ),
                 );
               },
