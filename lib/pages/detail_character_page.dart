@@ -5,7 +5,7 @@ import 'package:practica_webservices/models/response_api.dart';
 import '../boxes.dart';
 
 class DetailCharacterPage extends StatefulWidget {
-  var character;
+  final dynamic character; // Acepta tanto Results como LocalCharacter
 
   DetailCharacterPage(this.character);
 
@@ -15,7 +15,7 @@ class DetailCharacterPage extends StatefulWidget {
 }
 
 class _DetailCharacterPageState extends State<DetailCharacterPage> {
-  final Results character;
+  final dynamic character; // Acepta tanto Results como LocalCharacter
 
   _DetailCharacterPageState(this.character);
 
@@ -26,7 +26,9 @@ class _DetailCharacterPageState extends State<DetailCharacterPage> {
     box.values.forEach((element) {
       if (element.id == character.id) {
         print("${element.name} está en favoritos");
-        isFavorite = true;
+        setState(() {
+          isFavorite = true;
+        });
       }
     });
   }
@@ -38,18 +40,22 @@ class _DetailCharacterPageState extends State<DetailCharacterPage> {
       ..status = character.status
       ..species = character.species
       ..gender = character.gender
-      ..origin = character.origin?.name
-      ..location = character.location?.name
+      ..origin =
+          character.origin is String ? character.origin : character.origin?.name
+      ..location = character.location is String
+          ? character.location
+          : character.location?.name
       ..id = character.id;
 
     final box = Boxes.getFavoritesCharacters();
-    if(isFavorite){
+    if (isFavorite) {
       print("Eliminando");
       box.delete(localCharacter.id);
     } else {
       print("Agregando");
       box.put(localCharacter.id, localCharacter);
-    } setState(() {
+    }
+    setState(() {
       isFavorite = !isFavorite;
     });
   }
@@ -109,12 +115,14 @@ class _DetailCharacterPageState extends State<DetailCharacterPage> {
               const SizedBox(
                 height: 8,
               ),
-              Text("Origin: ${character.origin?.name}",
+              Text(
+                  "Origin: ${character.origin is String ? character.origin : character.origin?.name}",
                   style: TextStyle(fontSize: 20)),
               const SizedBox(
                 height: 8,
               ),
-              Text("Location: ${character.location?.name}",
+              Text(
+                  "Location: ${character.location is String ? character.location : character.location?.name}",
                   style: TextStyle(fontSize: 20)),
             ],
           ),
