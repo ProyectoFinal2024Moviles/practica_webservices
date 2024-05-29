@@ -15,38 +15,52 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(valueListenable: Boxes.getFavoritesCharacters().listenable(), builder: (context, box, _)
-    {
-      final favoriteCharacterBox = box.values.toList().cast<LocalCharacter>();
-      return ListView.builder(itemCount: favoriteCharacterBox.length, itemBuilder: (BuildContext context, int index)
-      {
-        final character = favoriteCharacterBox[index];
-        return Card(
-          surfaceTintColor: Colors.blue,
-          elevation: 4,
-          child: Column(
-            children: [
-              ListTile(
-                title: Text(
-                  character.name!,
-                  style: TextStyle(color: Colors.black, fontSize: 24),
-                  textAlign: TextAlign.center,
+    return ValueListenableBuilder(
+      valueListenable: Boxes.getFavoritesCharacters().listenable(),
+      builder: (context, box, _) {
+        final favoriteCharacterBox = box.values.toList().cast<LocalCharacter>();
+        return ListView.builder(
+          itemCount: favoriteCharacterBox.length,
+          itemBuilder: (BuildContext context, int index) {
+            final character = favoriteCharacterBox[index];
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailCharacterPage(character),
+                  ),
+                );
+              },
+              child: Card(
+                surfaceTintColor: Colors.blue,
+                elevation: 4,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        character.name!,
+                        style: TextStyle(color: Colors.black, fontSize: 24),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      height: 300,
+                      width: 300,
+                      child: Ink.image(
+                        image: NetworkImage(character.image!),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                height: 300,
-                width: 300,
-                child: Ink.image(
-                    image: NetworkImage(
-                        "${character.image}")),
-              ),
-              const SizedBox(
-                height: 16,
-              )
-            ],
-          ),
+            );
+          },
         );
-      });
-    });
+      },
+    );
   }
 }
